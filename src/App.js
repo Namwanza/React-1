@@ -9,7 +9,8 @@ class App extends Component {
       {name: "Namwanza", age: 26},
       {name: "Johnpaul", age: 24}
     ],
-    anotherState: 'Some other state' //we don't want everything to change, here anotherstate remains unchanged
+    anotherState: 'Some other state', //we don't want everything to change, here anotherstate remains unchanged
+    showPerson: false
   }
 
   switchNameHandler = (newName) => {
@@ -36,6 +37,11 @@ class App extends Component {
     })
 
   }
+  toggleNameHandler = () => {
+    const doesShow = this.state.showPerson;
+    this.setState({showPerson: !doesShow});
+
+  }
   render() {
     const styling = {
       color: 'black',
@@ -49,15 +55,20 @@ class App extends Component {
       <div className="App">
         <h1>Hi, I'm react App!</h1>
         <p>This really works fine!</p>
-        <button style={styling} onClick={this.switchNameHandler.bind(this, 'Ruth')}>switch names</button>
-        <Person 
-        name={this.state.persons[0].name} age={this.state.persons[0].age} />
-        <Person
-         name={this.state.persons[1].name} age={this.state.persons[1].age}
-         click={this.switchNameHandler.bind(this, 'Wilson!')}
-         changed={this.changeNameHandler}>My hobbies: Football</Person> 
-        <Person 
-        name={this.state.persons[2].name} age={this.state.persons[2].age} />
+        <button style={styling} onClick={this.toggleNameHandler}>switch names</button>
+      {
+        this.state.showPerson === true ? //Using the ternary expression here is not confortable and it confuses the jsx not recommended though
+        <div>
+          <Person 
+           name={this.state.persons[0].name} age={this.state.persons[0].age} />
+          <Person
+           name={this.state.persons[1].name} age={this.state.persons[1].age}
+           click={this.switchNameHandler.bind(this, 'Wilson!')}
+           changed={this.changeNameHandler}>My hobbies: Football</Person> 
+          <Person 
+          name={this.state.persons[2].name} age={this.state.persons[2].age} />
+        </div> : null
+      }  
       </div>
     );
     //return React.createElement("div", null, React.createElement('h1', {className: 'App'}, 'Does this work now?'));
