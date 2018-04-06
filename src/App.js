@@ -51,13 +51,10 @@ class App extends Component {
       padding: '6px',
       cursor: 'pointer'
     };
-    return (
-      <div className="App">
-        <h1>Hi, I'm react App!</h1>
-        <p>This really works fine!</p>
-        <button style={styling} onClick={this.toggleNameHandler}>switch names</button>
-      {
-        this.state.showPerson === true ? //Using the ternary expression here is not confortable and it confuses the jsx not recommended though
+
+    let person = null;
+    if(this.state.showPerson) {
+      person = (
         <div>
           <Person 
            name={this.state.persons[0].name} age={this.state.persons[0].age} />
@@ -67,8 +64,15 @@ class App extends Component {
            changed={this.changeNameHandler}>My hobbies: Football</Person> 
           <Person 
           name={this.state.persons[2].name} age={this.state.persons[2].age} />
-        </div> : null
-      }  
+        </div> 
+      );
+    }
+    return (
+      <div className="App">
+        <h1>Hi, I'm react App!</h1>
+        <p>This really works fine!</p>
+        <button style={styling} onClick={this.toggleNameHandler}>switch names</button>
+        {person}
       </div>
     );
     //return React.createElement("div", null, React.createElement('h1', {className: 'App'}, 'Does this work now?'));
